@@ -58,7 +58,7 @@ function Form(props) {
             className="ml-10"
             name="season"
             id="season"
-            onChange={(e) => props.test()}
+            onChange={(e) => props.setYear(e.target.value)}
           >
             <option value="2022">2022</option>
             <option value="2021">2021</option>
