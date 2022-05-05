@@ -8,6 +8,7 @@ function App() {
   const [year, setYear] = useState("2022");
   const [month, setMonth] = useState("05");
   const [day, setDay] = useState("04");
+  const [status, setStatus] = useState("idle");
 
   let date = `${year}-${month}-${day}`;
   const url = `https://api-nba-v1.p.rapidapi.com/games/date/${date}`;
@@ -25,18 +26,17 @@ function App() {
   }
 
   function requestGames() {
-    console.log(date);
-
+    setStatus("pending");
     fetch(url, options)
       .then((res) => res.json())
       .then((json) => {
-        // console.log(json.api.games);
+        setStatus("resolved");
         setGames(json.api.games);
       })
       .catch((err) => console.log("error:" + err));
   }
 
-  useEffect(() => requestGames(), [year, month, day]);
+  //useEffect(() => requestGames(), []);
 
   const [games, setGames] = useState([]);
   return (
@@ -45,18 +45,18 @@ function App() {
         <Navbar />
       </div>
       <div className="text-center mt-3">
-        <h3>Get the best NBA games</h3>
+        <h3 className="font-Oswald text-2xl">Get NBA Games Statistics</h3>
       </div>
-      <div className="text-center border-2 w-3/4 mx-auto mt-3">
+      <div className="text-center border-2 rounded-lg w-3/4 mx-auto mt-3">
         <Form
           setYear={setYear}
           setMonth={setMonth}
           setDay={setDay}
-          test={selectOnChange}
+          request={requestGames}
         />
       </div>
       <div className="mt-5 text-center">
-        <Results games={games} />
+        <Results games={games} status={status} />
       </div>
     </>
   );

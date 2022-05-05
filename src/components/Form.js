@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 
 function Form(props) {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = 5;
+  const day = 6;
+  console.log(`${y}-${m < 10 ? `0${m}` : m}-${day < 10 ? `0${day}` : day}`);
   const days = [
     "01",
     "02",
@@ -43,7 +48,7 @@ function Form(props) {
     { num: "06", name: "June" },
     { num: "07", name: "July" },
     { num: "08", name: "August" },
-    { num: "09", name: "Semptember" },
+    { num: "09", name: "September" },
     { num: "10", name: "October" },
     { num: "11", name: "November" },
     { num: "12", name: "December" },
@@ -51,8 +56,8 @@ function Form(props) {
 
   return (
     <>
-      <div className="py-5 flex justify-center items-center flex-col gap-5 md:flex-row">
-        <div className="-translate-x-1 md:-translate-x-0">
+      <div className="py-5 flex justify-center items-center flex-col gap-5">
+        <div className="">
           <label htmlFor="season">Season:</label>
           <select
             className="ml-10"
@@ -60,13 +65,15 @@ function Form(props) {
             id="season"
             onChange={(e) => props.setYear(e.target.value)}
           >
-            <option value="2022">2022</option>
-            <option value="2021">2021</option>
-            <option value="2020">2020</option>
-            <option value="2019">2019</option>
+            <option value="2022">{y}</option>
+            <option value="2021">{y - 1}</option>
+            <option value="2020">{y - 2}</option>
+            <option value="2019">{y - 3}</option>
+            <option value="2018">{y - 4}</option>
+            <option value="2017">{y - 5}</option>
           </select>
         </div>
-        <div>
+        <div className="translate-x-6">
           <label htmlFor="month">Month:</label>
           <select
             className="ml-10"
@@ -81,10 +88,10 @@ function Form(props) {
             ))}
           </select>
         </div>
-        <div className="-translate-x-11 md:-translate-x-0">
+        <div className="">
           <label htmlFor="day">Day:</label>
           <select
-            className="ml-12 translate-x-4 md:translate-x-0"
+            className="ml-12"
             name="day"
             id="day"
             onChange={(e) => props.setDay(e.target.value)}
@@ -95,6 +102,14 @@ function Form(props) {
               </option>
             ))}
           </select>
+        </div>
+        <div className="submit-btn">
+          <button
+            className="px-4 py-2 rounded-md bg-indigo-900 text-white hover:bg-indigo-700"
+            onClick={() => props.request()}
+          >
+            Submit
+          </button>
         </div>
       </div>
     </>
