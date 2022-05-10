@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 const Details = () => {
   const [game, setGame] = useState({});
+  const [status, setStatus] = useState("idle");
 
   const options = {
     method: "GET",
@@ -18,27 +19,37 @@ const Details = () => {
   function search() {}
 
   useEffect(() => {
+    setStatus("Pending");
     fetch(`https://api-nba-v1.p.rapidapi.com/gameDetails/${path}`, options)
       .then((response) => response.json())
       .then((response) => {
+        setStatus("Resolved");
         console.log(response.api.game[0]);
         setGame(response.api.game[0]);
       })
-      .catch((err) => console.error(err));
-  }, [path]);
+      .catch((err) => {
+        setStatus("Rejected");
+        console.error(err);
+      });
+  }, []);
 
-  // search();
-
-  return (
-    <div className="flex">
-      <div className="border-2 w-15">
-        <img className="h-12 w-15" src={game.hTeam.logo} alt="" />
+  if (status === "Pending") {
+    return <h3>Loading...</h3>;
+  } else if (status === "Rejected") {
+    return <h3>Error Fetching</h3>;
+  } else if (status === "Resolved") {
+    return (
+      <div className="flex">
+        <div className="border-2 w-15">
+          {/* <p>game.hTeam.seasonYear</p> */}
+          <img className="h-12 w-15" src={game.hTeam.logo} alt="" />
+        </div>
+        <div>
+          <img className="h-12" src={game.vTeam.logo} alt="" />
+        </div>
       </div>
-      <div>
-        <img className="h-12" src={game.vTeam.logo} alt="" />
-      </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default Details;
