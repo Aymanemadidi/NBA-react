@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 function Form(props) {
   const d = new Date();
   const y = d.getFullYear();
-  const m = 5;
-  const day = 6;
-  console.log(`${y}-${m < 10 ? `0${m}` : m}-${day < 10 ? `0${day}` : day}`);
+  const m = d.getMonth() + 1;
+  const day = d.getDate();
+  // console.log(`${y}-${m < 10 ? `0${m}` : m}-${day < 10 ? `0${day}` : day}`);
   const days = [
     "01",
     "02",
@@ -54,9 +54,18 @@ function Form(props) {
     { num: "12", name: "December" },
   ];
 
+  const seasons = [
+    { num: "2022", name: "2022" },
+    { num: "2021", name: "2021" },
+    { num: "2020", name: "2020" },
+    { num: "2019", name: "2019" },
+    { num: "2018", name: "2018" },
+    { num: "2017", name: "2017" },
+  ];
+
   return (
     <>
-      <div className="py-5 flex justify-center items-center flex-col gap-5">
+      <div className="py-5 flex justify-center items-center flex-col gap-5 font-Inter font-medium">
         <div className="">
           <label htmlFor="season">Season:</label>
           <select
@@ -65,12 +74,17 @@ function Form(props) {
             id="season"
             onChange={(e) => props.setYear(e.target.value)}
           >
-            <option value="2022">{y}</option>
-            <option value="2021">{y - 1}</option>
-            <option value="2020">{y - 2}</option>
-            <option value="2019">{y - 3}</option>
-            <option value="2018">{y - 4}</option>
-            <option value="2017">{y - 5}</option>
+            {seasons.map((e, i) => {
+              return (
+                <option
+                  value={e.num}
+                  key={i}
+                  // selected={m === Number(e.num) ? "selected" : null}
+                >
+                  {e.name}
+                </option>
+              );
+            })}
           </select>
         </div>
         <div className="translate-x-6">
@@ -82,7 +96,11 @@ function Form(props) {
             onChange={(e) => props.setMonth(e.target.value)}
           >
             {months.map((e, i) => (
-              <option value={e.num} key={i}>
+              <option
+                value={e.num}
+                key={i}
+                // selected={m === Number(e.num) ? "selected" : null}
+              >
                 {e.name}
               </option>
             ))}
@@ -97,7 +115,11 @@ function Form(props) {
             onChange={(e) => props.setDay(e.target.value)}
           >
             {days.map((e, i) => (
-              <option value={e} key={i}>
+              <option
+                value={e}
+                key={i}
+                // selected={day === Number(e) ? "selected" : null}
+              >
                 {e}
               </option>
             ))}

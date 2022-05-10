@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     fontFamily: {
       Oswald: ["Oswald", "sans-serif"],
+      Inter: ["Inter", "sans-serif"],
     },
     extend: {},
   },

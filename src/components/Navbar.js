@@ -7,7 +7,7 @@ function Navbar() {
   const [isOpen, setIsopen] = useState(false);
 
   return (
-    <div className="py-4">
+    <div className="py-4 bg-slate-900">
       <div className=" flex justify-between items-center px-3">
         <div className="logo ml-4">
           <img className="h-10" src={logo} />
