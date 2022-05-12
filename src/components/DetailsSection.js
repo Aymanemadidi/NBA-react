@@ -37,35 +37,68 @@ const DetailsSection = () => {
 
   const path = window.location.pathname.slice(17);
 
-  // let stats = [
-
-  // ];
-
   useEffect(() => {
     setStatus("Pending");
+
+    if (window.localStorage.getItem("responseGame")) {
+      setGame(
+        JSON.parse(window.localStorage.getItem("responseGame")).api.game[0]
+      );
+      setStatus("Resolved");
+      return;
+    }
     fetch(`https://api-nba-v1.p.rapidapi.com/gameDetails/${path}`, options)
       .then((response) => response.json())
       .then((response) => {
         setStatus("Resolved");
-        console.log(response.api.game[0]);
+        window.localStorage.setItem("responseGame", JSON.stringify(response));
         setGame(response.api.game[0]);
       })
       .catch((err) => {
         setStatus("Rejected");
         console.error(err);
       });
+    return function () {
+      window.localStorage.clear();
+    };
   }, []);
 
   useEffect(() => {
-    // setStatus("Pending");
+    if (window.localStorage.getItem("responseStats")) {
+      setStats(
+        nums.map((e, i) => {
+          return {
+            label: Object.keys(
+              JSON.parse(window.localStorage.getItem("responseStats")).api
+                .statistics[0]
+            )[e],
+            hTeam: JSON.parse(window.localStorage.getItem("responseStats")).api
+              .statistics[1][
+              Object.keys(
+                JSON.parse(window.localStorage.getItem("responseStats")).api
+                  .statistics[0]
+              )[e]
+            ],
+            vTeam: JSON.parse(window.localStorage.getItem("responseStats")).api
+              .statistics[0][
+              Object.keys(
+                JSON.parse(window.localStorage.getItem("responseStats")).api
+                  .statistics[1]
+              )[e]
+            ],
+          };
+        })
+      );
+      setStatus("Resolved");
+      return;
+    }
     fetch(
       `https://api-nba-v1.p.rapidapi.com/statistics/games/gameId/${path}`,
       options
     )
       .then((response) => response.json())
       .then((response) => {
-        // setStatus("Resolved");
-        console.log(response);
+        window.localStorage.setItem("responseStats", JSON.stringify(response));
 
         setStats(
           nums.map((e, i) => {
@@ -87,6 +120,10 @@ const DetailsSection = () => {
         // setStatus("Rejected");
         console.error(err);
       });
+
+    return function () {
+      window.localStorage.clear();
+    };
   }, []);
 
   if (status === "Pending") {
@@ -151,6 +188,7 @@ const DetailsSection = () => {
       </>
     );
   }
+  window.localStorage.clear();
 };
 
 export default DetailsSection;
