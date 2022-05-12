@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-// import detroit from "../../public/Detroit_Pistons_primary_logo_2017.png";
-// import timb from "../../public/Timberwolves_du_Minnesota_logo_2017.png";
 
 import "../test.css";
 
@@ -117,7 +115,6 @@ const DetailsSection = () => {
         );
       })
       .catch((err) => {
-        // setStatus("Rejected");
         console.error(err);
       });
 
@@ -135,15 +132,10 @@ const DetailsSection = () => {
       <>
         <div className="flex justify-around font-semibold mt-3">
           <div className="text-center">
-            {/* <p>game.hTeam.seasonYear</p> */}
             <img className="img-logo" src={game.hTeam.logo} alt="" />
-            {/* <img className="img-logo" src={detroit} alt="" /> */}
-            {/* <h3>{game.hTeam.fullName}</h3> */}
           </div>
           <div className="text-center">
             <img className="img-logo" src={game.vTeam.logo} alt="" />
-            {/* <img className="img-logo" src={timb} alt="" /> */}
-            {/* <h3>{game.vTeam.fullName}</h3> */}
           </div>
         </div>
         <div className="mt-10">
@@ -176,15 +168,6 @@ const DetailsSection = () => {
             </div>
           ))}
         </div>
-        {/* <div className="border-t-2 border-l-2 border-b-2 w-1/3 font-semibold">
-          <p className="text-xl">109</p>
-        </div>
-        <div className="border-t-2 border-l-2 border-b-2 w-1/3">
-          <p className="text-xl">Score</p>
-        </div>
-        <div className="border-t-2 border-l-2 border-b-2 border-r-2 w-1/3 font-semibold">
-          <p className="text-xl">108</p>
-        </div> */}
       </>
     );
   }
