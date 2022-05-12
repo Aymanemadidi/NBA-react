@@ -2,6 +2,7 @@ import { useState } from "react";
 import logo from "../../public/nba-seeklogo.com.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [isOpen, setIsopen] = useState(false);
@@ -9,9 +10,11 @@ function Navbar() {
   return (
     <div className="py-4 bg-slate-900">
       <div className=" flex justify-between items-center px-3">
-        <div className="logo ml-4">
-          <img className="h-10" src={logo} />
-        </div>
+        <Link to="/">
+          <div className="logo ml-4">
+            <img className="h-10" src={logo} />
+          </div>
+        </Link>
         <div className="text-center mr-4 md:hidden">
           <div>
             {isOpen ? (
