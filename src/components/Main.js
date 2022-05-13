@@ -5,13 +5,17 @@ import Results from "./Results";
 
 function Main() {
   const [year, setYear] = useState("2022");
-  const [month, setMonth] = useState("05");
-  const [day, setDay] = useState("04");
+  const [month, setMonth] = useState("01");
+  const [day, setDay] = useState("01");
   const [status, setStatus] = useState("idle");
+  //const [fetchOn, setFetchOn] = useState(false);
 
-  const funcArr = [setDay, setMonth, setYear, requestGames];
+  const funcArr = [setDay, setMonth, setYear, setStatus, requestGames];
+
+  const [games, setGames] = useState([]);
 
   let date = `${year}-${month}-${day}`;
+  //console.log(date);
   const url = `https://api-nba-v1.p.rapidapi.com/games/date/${date}`;
 
   const options = {
@@ -26,26 +30,38 @@ function Main() {
     console.log("getting Run");
   }
 
+  useEffect(() => {
+    if (window.localStorage.getItem("games")) {
+      setStatus("Resolved");
+    }
+  });
+
+  // if (window.localStorage.getItem("games")) {
+  //   //setGames(JSON.parse(window.localStorage.getItem("games")));
+  //   setStatus("Resolved");
+  // }
+
   function requestGames() {
+    //setFetchOn(true);
     setStatus("pending");
     fetch(url, options)
       .then((res) => res.json())
       .then((json) => {
         setStatus("resolved");
+        window.localStorage.setItem("games", JSON.stringify(json.api.games));
+        //console.log(json.api.games);
         setGames(json.api.games);
       })
       .catch((err) => console.log("error:" + err));
   }
 
   //useEffect(() => requestGames(), []);
-
-  const [games, setGames] = useState([]);
   return (
     <>
       <Navbar />
       <ContainerForm functions={funcArr} />
       <div className="mt-5 text-center font-semibold">
-        <Results games={games} status={status} />
+        <Results games={games} status={status} date={date} />
       </div>
     </>
   );

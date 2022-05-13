@@ -1,10 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 function Form(props) {
   const d = new Date();
   const y = d.getFullYear();
   const m = d.getMonth() + 1;
   const day = d.getDate();
+
+  const refYear = useRef();
+  const refMonth = useRef();
+  const refDay = useRef();
   // console.log(`${y}-${m < 10 ? `0${m}` : m}-${day < 10 ? `0${day}` : day}`);
   const days = [
     "01",
@@ -63,6 +67,18 @@ function Form(props) {
     { num: "2017", name: "2017" },
   ];
 
+  useEffect(() => {
+    let yearValue = refYear.current.value;
+    console.log(yearValue); // not working
+    let monthValue = refMonth.current.value;
+    let dayValue = refDay.current.value;
+    return function () {
+      window.localStorage.setItem("year", yearValue);
+      window.localStorage.setItem("month", monthValue);
+      window.localStorage.setItem("day", dayValue);
+    };
+  }, [refYear]);
+
   return (
     <>
       <div className="py-5 flex justify-center items-center flex-col gap-5 font-Inter font-medium">
@@ -72,15 +88,16 @@ function Form(props) {
             className="ml-10"
             name="season"
             id="season"
-            onChange={(e) => props.setYear(e.target.value)}
+            ref={refYear}
+            value={window.localStorage.getItem("year") || y}
+            onChange={(e) => {
+              window.localStorage.setItem("year", e.target.value);
+              props.setYear(e.target.value);
+            }}
           >
             {seasons.map((e, i) => {
               return (
-                <option
-                  value={e.num}
-                  key={i}
-                  // selected={m === Number(e.num) ? "selected" : null}
-                >
+                <option value={e.num} key={e.num}>
                   {e.name}
                 </option>
               );
@@ -93,14 +110,15 @@ function Form(props) {
             className="ml-10"
             name="month"
             id="month"
-            onChange={(e) => props.setMonth(e.target.value)}
+            ref={refMonth}
+            value={window.localStorage.getItem("month") || m}
+            onChange={(e) => {
+              window.localStorage.setItem("month", e.target.value);
+              props.setMonth(e.target.value);
+            }}
           >
             {months.map((e, i) => (
-              <option
-                value={e.num}
-                key={i}
-                // selected={m === Number(e.num) ? "selected" : null}
-              >
+              <option value={e.num} key={e.num}>
                 {e.name}
               </option>
             ))}
@@ -112,12 +130,17 @@ function Form(props) {
             className="ml-12"
             name="day"
             id="day"
-            onChange={(e) => props.setDay(e.target.value)}
+            ref={refDay}
+            value={window.localStorage.getItem("day") || day}
+            onChange={(e) => {
+              window.localStorage.setItem("day", e.target.value);
+              props.setDay(e.target.value);
+            }}
           >
             {days.map((e, i) => (
               <option
                 value={e}
-                key={i}
+                key={e}
                 // selected={day === Number(e) ? "selected" : null}
               >
                 {e}

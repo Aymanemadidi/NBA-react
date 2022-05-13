@@ -57,7 +57,7 @@ const DetailsSection = () => {
         console.error(err);
       });
     return function () {
-      window.localStorage.clear();
+      //window.localStorage.clear();
     };
   }, []);
 
@@ -119,7 +119,7 @@ const DetailsSection = () => {
       });
 
     return function () {
-      window.localStorage.clear();
+      //window.localStorage.clear();
     };
   }, []);
 
@@ -171,7 +171,7 @@ const DetailsSection = () => {
       </>
     );
   }
-  window.localStorage.clear();
+  //window.localStorage.clear();
 };
 
 export default DetailsSection;

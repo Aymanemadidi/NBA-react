@@ -11,7 +11,8 @@ function ContainerForm(props) {
           setYear={props.functions[2]}
           setMonth={props.functions[1]}
           setDay={props.functions[0]}
-          request={props.functions[3]}
+          setStatus={props.functions[3]}
+          request={props.functions[4]}
         />
       </div>
     </>
