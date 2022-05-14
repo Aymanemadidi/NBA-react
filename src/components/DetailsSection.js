@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 
 import "../test.css";
@@ -5,6 +6,7 @@ import "../test.css";
 const DetailsSection = () => {
   const [game, setGame] = useState({});
   const [status, setStatus] = useState("idle");
+  const [paath, setPath] = useState(window.location.pathname.slice(17));
   const [stats, setStats] = useState([
     {
       hTeam: "109",
@@ -33,7 +35,7 @@ const DetailsSection = () => {
     },
   };
 
-  const path = window.location.pathname.slice(17);
+  // const path = window.location.pathname.slice(17);
 
   useEffect(() => {
     setStatus("Pending");
@@ -43,12 +45,17 @@ const DetailsSection = () => {
         JSON.parse(window.localStorage.getItem("responseGame")).api.game[0]
       );
       setStatus("Resolved");
-      return;
+      return function () {
+        window.localStorage.removeItem("responseGame");
+      };
     }
-    fetch(`https://api-nba-v1.p.rapidapi.com/gameDetails/${path}`, options)
+    fetch(`https://api-nba-v1.p.rapidapi.com/gameDetails/${paath}`, options)
       .then((response) => response.json())
       .then((response) => {
         setStatus("Resolved");
+        // if (window.localStorage.getItem("responseGame")) {
+        //   window.localStorage.removeItem("responseGame");
+        // }
         window.localStorage.setItem("responseGame", JSON.stringify(response));
         setGame(response.api.game[0]);
       })
@@ -57,9 +64,10 @@ const DetailsSection = () => {
         console.error(err);
       });
     return function () {
-      //window.localStorage.clear();
+      // window.localStorage.clear();
+      // console.log(JSON.parse(window.localStorage.getItem("responseGame")));
     };
-  }, []);
+  }, [paath]);
 
   useEffect(() => {
     if (window.localStorage.getItem("responseStats")) {
@@ -88,10 +96,12 @@ const DetailsSection = () => {
         })
       );
       setStatus("Resolved");
-      return;
+      return function () {
+        window.localStorage.removeItem("responseStats");
+      };
     }
     fetch(
-      `https://api-nba-v1.p.rapidapi.com/statistics/games/gameId/${path}`,
+      `https://api-nba-v1.p.rapidapi.com/statistics/games/gameId/${paath}`,
       options
     )
       .then((response) => response.json())
@@ -121,7 +131,7 @@ const DetailsSection = () => {
     return function () {
       //window.localStorage.clear();
     };
-  }, []);
+  }, [paath]);
 
   if (status === "Pending") {
     return <h3>Loading...</h3>;

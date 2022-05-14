@@ -1,9 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { Link } from "react-router-dom";
 
 function ResultCard({ game, i }) {
-  function test() {
-    console.log("test triggered");
-  }
   return (
     <Link
       to={`/details/${game.hTeam.shortName}-${game.vTeam.shortName}/${game.gameId}`}

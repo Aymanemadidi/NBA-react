@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import ContainerForm from "./ContainerForm";
@@ -42,7 +43,12 @@ function Main() {
   // }
 
   function requestGames() {
+    console.log("func enter");
     //setFetchOn(true);
+    if (window.localStorage.getItem("responseGame") !== null) {
+      console.log("I enter here");
+      window.localStorage.removeItem("responseGame");
+    }
     setStatus("pending");
     fetch(url, options)
       .then((res) => res.json())

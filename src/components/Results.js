@@ -1,10 +1,9 @@
+/* eslint-disable no-unused-vars */
 import ResultCard from "./ResultCard";
 
 function Results({ games, status, date, fetch }) {
   let gamesNew = JSON.parse(window.localStorage.getItem("games")) || games;
-  function test() {
-    console.log("test triggered");
-  }
+
   if (status === "idle") {
     return <h3>Please pick a date</h3>;
   } else if (status === "pending") {

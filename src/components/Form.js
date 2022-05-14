@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react";
 
 function Form(props) {
@@ -69,15 +70,14 @@ function Form(props) {
 
   useEffect(() => {
     let yearValue = refYear.current.value;
-    console.log(yearValue); // not working
     let monthValue = refMonth.current.value;
     let dayValue = refDay.current.value;
     return function () {
-      window.localStorage.setItem("year", yearValue);
-      window.localStorage.setItem("month", monthValue);
-      window.localStorage.setItem("day", dayValue);
+      // window.localStorage.setItem("year", yearValue);
+      // window.localStorage.setItem("month", monthValue);
+      // window.localStorage.setItem("day", dayValue);
     };
-  }, [refYear]);
+  }, [refYear, refMonth, refDay]);
 
   return (
     <>
