@@ -134,7 +134,7 @@ const DetailsSection = () => {
   }, [paath]);
 
   if (status === "Pending") {
-    return <h3>Loading...</h3>;
+    return <h3 className="text-center">Loading...</h3>;
   } else if (status === "Rejected") {
     return <h3>Error Fetching</h3>;
   } else if (status === "Resolved") {
@@ -148,7 +148,7 @@ const DetailsSection = () => {
             <img className="img-logo" src={game.vTeam.logo} alt="" />
           </div>
         </div>
-        <div className="mt-10">
+        <div className="mt-10 mb-10">
           {stats.map((obj, i) => (
             <div
               className="flex justify-center text-center m-1 items-center"
@@ -181,7 +181,6 @@ const DetailsSection = () => {
       </>
     );
   }
-  //window.localStorage.clear();
 };
 
 export default DetailsSection;
